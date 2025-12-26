@@ -60,40 +60,6 @@
 4. 确认脚本已启用，并在 Tampermonkey 中能看到 `115Master`
 5. 打开 115 网盘页面，刷新后脚本自动生效
 
-脚本默认匹配的页面（节选）：
-
-- `https://115.com/?ct*`
-- `https://115.com/web/lixian/master/video/*`
-- `https://115.com/web/lixian/master/magnet/*`
-- `https://f.115.com/storage/netdisk*`
-
-## m3u8嗅探脚本功能说明
-
-本仓库同时提供一个通用的 m3u8 嗅探脚本：`userscript/dog-catch-mobile.user.js`。它会在你浏览网页时自动侦测页面请求中的 `m3u8`（以及部分 `video` 直链），并提供一键跳转到字幕狗播放器的入口。
-
-### 主要功能
-
-- 自动嗅探 `m3u8`：通过监听 `Response.prototype.text()` 与 `XMLHttpRequest` 响应内容，识别以 `#EXTM3U` 开头的播放列表
-- 侦测视频直链：定时扫描页面中的 `<video>` 元素，捕获可用的 `http(s)` 视频源
-- 自动补链 `playlist.m3u8`：当发现路径以 `/video.m3u8` 结尾时，会额外构造同目录的 `../playlist.m3u8` 并展示（常用于多清晰度的 Master Playlist）
-- 右上角浮层列表：展示侦测到的资源类型、路径、时长，并提供“播放(Play)”按钮
-- 一键跳转字幕狗播放器：点击“播放(Play)”会打开 `https://player.sub-dog.top/`，并附带 `src/type/title/video` 等参数
-- 防跳转（仅 `missav.live`）：首次点击播放器区域时短暂拦截弹窗/跳转，降低广告干扰（按住 `Alt`/`Meta` 可放行）
-
-### 安装方式
-
-在 Tampermonkey 中导入安装 `userscript/dog-catch-mobile.user.js`（和安装其他油猴脚本的方式一致：管理面板 → 添加新脚本/从文件导入）。
-
-注意：该脚本的 `@match` 为 `*://*/*`，默认几乎对所有网站生效；同时已排除 `https://player.sub-dog.top/*` 等页面，避免在播放器页面重复运行。
-
-### 使用说明
-
-1. 打开任意包含 HLS 播放的页面，正常开始播放
-2. 当脚本侦测到 `m3u8` 或视频直链后，页面右上角会出现一个圆形计数按钮（数字表示已捕获条目数量）
-3. 点击某条记录右侧的“播放(Play)”会在新标签页打开字幕狗播放器进行播放
-4. 点击条目中的路径文字会复制完整链接
-5. 拖动右上角圆形按钮可以调整位置；单击圆形按钮可折叠/展开列表（位置与折叠状态会保存）
-
 ## 脚本使用介绍
 
 ### 1) 进入播放页
